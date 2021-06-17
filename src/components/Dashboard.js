@@ -4,22 +4,16 @@ import {Table,Modal,Card} from 'react-bootstrap'
 import React from 'react'
 export default function Dashboard() {
    const [launches,setLaunches] = useState([]);
-   const [show, setShow] = useState(false)
+   const [show, setShow] = useState(false);
    const [selectedData, setSelectedData] = useState({});
    const {flight_number,rocket,details,mission_name,launch_date_utc,launch_site} = selectedData
-   //const {rocket_name} = rocket
-   console.log(rocket)
+   
    const handleClose = ()=> setShow(false)
-    //  const handleShow=(fn)=>{
-    //     //  setFlightNumber(fn-1);
-    //      console.log(fn)
-
-    //  }
+   
     useEffect(() => {
         axios.get('https://api.spacexdata.com/v3/launches'
         ,{
             params: {
-                //launch_success: false
                 limit:10
               }
         }
@@ -36,7 +30,6 @@ export default function Dashboard() {
     const handleChange=()=>{
         const select = document.getElementById("select");
         const selectedValue = select.options[select.selectedIndex].value;
-        console.log(selectedValue);
         if(selectedValue==="failed"){
             axios.get('https://api.spacexdata.com/v3/launches'
                 ,{
@@ -48,7 +41,6 @@ export default function Dashboard() {
                 )
                 .then((res)=>{
                     setLaunches(res.data);
-                    console.log(res.data);
                 })
         }
         if(selectedValue==="success"){
@@ -62,7 +54,6 @@ export default function Dashboard() {
                 )
                 .then((res)=>{
                     setLaunches(res.data);
-                    console.log(res.data);
                 })
         }
         if(selectedValue==="upcoming"){
@@ -75,7 +66,6 @@ export default function Dashboard() {
                 )
                 .then((res)=>{
                     setLaunches(res.data);
-                    console.log(res.data);
                 })
         }
         if(selectedValue==="all"){
@@ -88,7 +78,6 @@ export default function Dashboard() {
                 )
                 .then((res)=>{
                     setLaunches(res.data);
-                    console.log(res.data);
                 })
         }
     }
@@ -142,7 +131,6 @@ export default function Dashboard() {
                                     onClick={()=>{
                                         setShow(true)
                                         setSelectedData(launch)
-                                        // handleShow(launch.flight_number)
                                         }}
                                 >
                                     <td>{index+1}</td>
