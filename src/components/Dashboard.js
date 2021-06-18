@@ -76,6 +76,7 @@ export default function Dashboard() {
         axios.get('https://api.spacexdata.com/v3/launches')
         .then((res)=>{
             setLaunches(res.data);
+            console.log(res.data[0])
         })
     },[])
     
@@ -211,11 +212,11 @@ export default function Dashboard() {
                             </tr>                   
                             <tr>
                                 <td>Manufacturer</td>
-                                <td style={{align:'right'}}>SpaceX</td>
+                                <td style={{align:'right'}}>{selectedData.rocket.second_stage.payloads[0].manufacturer}</td>
                             </tr>                   
                             <tr>
                                 <td>Nationality</td>
-                                <td style={{align:'right'}}>SpaceX</td>
+                                <td style={{align:'right'}}>{selectedData.rocket.second_stage.payloads[0].nationality}</td>
                             </tr>                   
                             <tr>
                                 <td>Launch Date</td>
