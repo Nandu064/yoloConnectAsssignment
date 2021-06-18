@@ -60,10 +60,10 @@ export default function Dashboard() {
     sizePerPage: 10,
     lastPageText: '>>',
     firstPageText: '<<',
-    nextPageText: '>',
-    prePageText: '<',
-    showTotal: true,
+    nextPageText: 'Next',
+    prePageText: 'Prev',
     alwaysShowAllBtns: true,
+    hideSizePerPage: true,
   });
   const rowEvent={
     onClick: (e, row, rowIndex) => {
