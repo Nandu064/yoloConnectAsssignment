@@ -4,7 +4,6 @@ import {Table,Modal,Card} from 'react-bootstrap'
 import React from 'react'
 export default function Dashboard() {
    const [launches,setLaunches] = useState();
-   const [index, setIndex] = useState();
    const [show, setShow] = useState(false);
    const [selectedData, setSelectedData] = useState();
    //const {flight_number,details,mission_name,launch_date_utc,launch_success} = selectedData
@@ -82,35 +81,37 @@ export default function Dashboard() {
     }
     return (
         <div>
-            <div style={{
-                backgroundColor:'lightgray',
-                color:'black',
-                fontSize:'24px',
-                fontWeight:'bold',
-                height:'40px'
-            }}>
-                Spacex
+            <div>
+                <h1 style={{
+                    backgroundColor:'lightgray',
+                    color:'black',
+                    fontSize:'24px',
+                    fontWeight:'bold',
+                    height:'40px'
+                    }}>Space X</h1>
+                <div 
+                    style={{
+                        display:'flex',
+                        justifyContent:'flex-end',
+                        paddingTop:'10px',
+                        marginBottom:'10px',
+                    }}
+                >
+                    <i className="fas fa-filter"
+                        style={{
+                            height:'20px',
+                            width:'20px'
+                        }}
+                    ></i>
+                    <select id="select" style={{width:'150px'}} onChange={handleChange}>
+                        <option value="all">All Launches</option>
+                        <option value="upcoming">Upcoming Launches</option>
+                        <option value="success">Successfull Launches</option>
+                        <option value="failed">Failed Launches</option>
+                    </select>
+                </div>
             </div>
-            <div 
-                style={{
-                    display:'flex',
-                    justifyContent:'flex-end',
-                    paddingTop:'10px',
-                    marginBottom:'10px',
-                }}
-            ><i className="fas fa-filter"
-                style={{
-                    height:'20px',
-                    width:'20px'
-                }}
-            ></i>
-                <select id="select" style={{width:'150px'}} onChange={handleChange}>
-                    <option value="all">All Launches</option>
-                    <option value="upcoming">Upcoming Launches</option>
-                    <option value="success">Successfull Launches</option>
-                    <option value="failed">Failed Launches</option>
-                </select>
-            </div>
+           
             <Table responsive>
                 <thead>
                     <tr style={{backgroundColor:'lightgray'}}>
