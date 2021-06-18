@@ -3,13 +3,12 @@ import {useState,useEffect} from 'react'
 import {Table,Modal,Card} from 'react-bootstrap'
 import React from 'react'
 export default function Dashboard() {
-   const [launches,setLaunches] = useState([]);
+   const [launches,setLaunches] = useState();
+   const [index, setIndex] = useState();
    const [show, setShow] = useState(false);
-   const [selectedData, setSelectedData] = useState({});
-   const {flight_number,rocket,details,mission_name,launch_date_utc,launch_site} = selectedData
-   
+   const [selectedData, setSelectedData] = useState();
+   //const {flight_number,details,mission_name,launch_date_utc,launch_success} = selectedData
    const handleClose = ()=> setShow(false)
-   
     useEffect(() => {
         axios.get('https://api.spacexdata.com/v3/launches'
         ,{
@@ -84,9 +83,11 @@ export default function Dashboard() {
     return (
         <div>
             <div style={{
-                align:'center',
-                width:'30px'
-                
+                backgroundColor:'lightgray',
+                color:'black',
+                fontSize:'24px',
+                fontWeight:'bold',
+                height:'40px'
             }}>
                 Spacex
             </div>
@@ -124,6 +125,7 @@ export default function Dashboard() {
                 </thead>
                 <tbody>
                     {
+                        launches ? 
                         launches.map((launch,index)=>{
                             return(
                                 <tr 
@@ -147,22 +149,24 @@ export default function Dashboard() {
                                     <td>{launch.rocket.rocket_name}</td>
                                 </tr>
                             )
-                        })
+                        }) : null
                     }                    
                 </tbody>
             </Table>
-            <Modal show={show} onHide={handleClose} animation={false}>
+            {
+                selectedData ?
+                <Modal show={show} onHide={handleClose} animation={false}>
                 <Modal.Header closeButton>
                     <Modal.Title>
                         <Card style={{ width: '18rem',border:'0px' }}>
                             <Card.Body>
                                 <Card.Title>
                                     <p style={{display:'flex',width:'200px',justifyContent:'space-between'}}>
-                                        {mission_name}
+                                        {selectedData.mission_name}
                                         {selectedData.launch_success ? <span style={{backgroundColor:'lightgreen',color:'green',width:'auto',borderRadius:'12px'}}>{success}</span> : <span style={{backgroundColor:'orange',color:'red',width:'auto',borderRadius:'12px'}}>{fail}</span>}
                                     </p>
                                 </Card.Title>
-                                <Card.Subtitle className="mb-2 text-muted">{rocket.rocket_name}</Card.Subtitle>
+                                <Card.Subtitle className="mb-2 text-muted">{selectedData.rocket.rocket_name}</Card.Subtitle>
                                 
                             </Card.Body>
                         </Card>
@@ -173,26 +177,26 @@ export default function Dashboard() {
                         <thead>
                             <tr>
                                 <Card.Text>
-                                    {details}
+                                    {selectedData.details}
                                 </Card.Text>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td >Flight Number</td>
-                                <td style={{align:'right',width:'140px'}}>{flight_number}</td>
+                                <td style={{align:'right',width:'140px'}}>{selectedData.flight_number}</td>
                             </tr>                   
                             <tr>
                                 <td>Mission Name</td>
-                                <td style={{align:'right'}}>{mission_name}</td>
+                                <td style={{align:'right'}}>{selectedData.mission_name}</td>
                             </tr>                   
                             <tr>
                                 <td>Rocket Type</td>
-                                <td style={{align:'right'}}>{rocket.rocket_type}</td>
+                                <td style={{align:'right'}}>{selectedData.rocket.rocket_type}</td>
                             </tr>                   
                             <tr>
                                 <td>Rocket Name</td>
-                                <td style={{align:'right'}}>{rocket.rocket_name}</td>
+                                <td style={{align:'right'}}>{selectedData.rocket.rocket_name}</td>
                             </tr>                   
                             <tr>
                                 <td>Manufacturer</td>
@@ -204,24 +208,26 @@ export default function Dashboard() {
                             </tr>                   
                             <tr>
                                 <td>Launch Date</td>
-                                <td style={{align:'right'}}>{launch_date_utc}</td>
+                                <td style={{align:'right'}}>{selectedData.launch_date_utc}</td>
                             </tr>                   
                             <tr>
                                 <td>Payload Type</td>
-                                <td style={{align:'right'}}>{rocket.second_stage.payloads[0].payload_type}</td>
+                                <td style={{align:'right'}}>{selectedData.rocket.rocket_type}</td>
                             </tr>                   
                             <tr>
                                 <td>Orbit</td>
-                                <td style={{align:'right'}}>{rocket.second_stage.payloads[0].orbit}</td>
+                                <td style={{align:'right'}}>{selectedData.rocket.second_stage.payloads[0].orbit}</td>
                             </tr>                   
                             <tr>
                                 <td>Launch Site</td>
-                                <td style={{align:'right'}}>{launch_site.site_name}</td>
+                                <td style={{align:'right'}}>{selectedData.launch_site.site_name}</td>
                             </tr>                   
                         </tbody>
                     </Table>
                 </Modal.Body>
             </Modal>
+            : null
+            }
         </div>                
     )
 }
