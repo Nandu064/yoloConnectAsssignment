@@ -3,6 +3,7 @@ import {useState,useEffect} from 'react'
 import {Table,Modal,Card} from 'react-bootstrap'
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
+import styles from './Dashboard.module.css'
 import React from 'react'
 export default function Dashboard() {
    const [launches,setLaunches] = useState();
@@ -170,69 +171,77 @@ export default function Dashboard() {
                 selectedData ?
                 <Modal show={show} onHide={handleClose} animation={false}>
                 <Modal.Header closeButton>
-                    <Modal.Title>
-                        <Card style={{ width: '18rem',border:'0px' }}>
-                            <Card.Body>
-                                <Card.Title>
-                                    <p style={{display:'flex',width:'200px',justifyContent:'space-between'}}>
-                                        {selectedData.mission_name}
-                                        {selectedData.launch_success ? <span style={{backgroundColor:'lightgreen',color:'green',width:'auto',borderRadius:'12px'}}>{success}</span> : <span style={{backgroundColor:'orange',color:'red',width:'auto',borderRadius:'12px'}}>{fail}</span>}
-                                    </p>
-                                </Card.Title>
-                                <Card.Subtitle className="mb-2 text-muted">{selectedData.rocket.rocket_name}</Card.Subtitle>
-                            </Card.Body>
-                        </Card>
+                    <Modal.Title style={{width:'90%'}}>
+                        <div className={styles.container}>
+                            <div className="image">
+                                <img src={selectedData.links.mission_patch_small} style={{width:'100px',height:'100%'}}></img>
+                            </div>
+                            <div className="titleContainer">
+                                <div className="title">
+                                    <h4>{selectedData.mission_name}</h4>
+                                    <h6>{selectedData.rocket.rocket_name}</h6>
+                                </div>
+                                <div className={styles.linkDetails}>
+                                    <a href={selectedData.links.article_link}><i className="fas fa-blog" style={{color:'black',}}></i></a>
+                                    <a href={selectedData.links.wikipedia}><i className="fab fa-wikipedia-w" style={{color:'black',}}></i></a>
+                                    <a href={selectedData.links.video_link}><i className="fab fa-youtube" style={{color:'black',}}></i></a>
+                                </div>
+                            </div>
+                            <div className={styles.status}>
+                                {
+                                    (selectedData.launch_success === "Success") ?<span style={{fontSize:'14px',borderRadius:'12px',backgroundColor:'lightgreen',color:'green',position:'absolute',top:'0',left:'0'}}>{success}</span> : ((selectedData.launch_success === "Failed" ) ? <span style={{fontSize:'14px',borderRadius:'12px',backgroundColor:'orange',color:'red',position:'absolute',top:'0',left:'0'}}>{fail}</span> :<span style={{fontSize:'14px',borderRadius:'12px',backgroundColor:'orange',color:'red',position:'absolute',top:'0',left:'0'}}>Upcoming</span>) 
+                                }
+                            </div>
+                        </div>
+                        
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    <div class={styles.details}>
+                        {selectedData.details} 
+                        <a href={selectedData.links.wikipedia}> Wikipedia</a>
+                    </div>
                     <Table responsive>
-                        <thead>
-                            <tr>
-                                <Card.Text>
-                                    {selectedData.details}
-                                </Card.Text>
-                            </tr>
-                        </thead>
                         <tbody>
                             <tr>
                                 <td >Flight Number</td>
-                                <td style={{align:'right',width:'140px'}}>{selectedData.flight_number}</td>
+                                <td style={{align:'left',width:'55%'}}>{selectedData.flight_number}</td>
                             </tr>                   
                             <tr>
                                 <td>Mission Name</td>
-                                <td style={{align:'right'}}>{selectedData.mission_name}</td>
+                                <td style={{align:'left'}}>{selectedData.mission_name}</td>
                             </tr>                   
                             <tr>
                                 <td>Rocket Type</td>
-                                <td style={{align:'right'}}>{selectedData.rocket.rocket_type}</td>
+                                <td style={{align:'left'}}>{selectedData.rocket.rocket_type}</td>
                             </tr>                   
                             <tr>
                                 <td>Rocket Name</td>
-                                <td style={{align:'right'}}>{selectedData.rocket.rocket_name}</td>
+                                <td style={{align:'left'}}>{selectedData.rocket.rocket_name}</td>
                             </tr>                   
                             <tr>
                                 <td>Manufacturer</td>
-                                <td style={{align:'right'}}>{selectedData.rocket.second_stage.payloads[0].manufacturer}</td>
+                                <td style={{align:'left'}}>{selectedData.rocket.second_stage.payloads[0].manufacturer}</td>
                             </tr>                   
                             <tr>
                                 <td>Nationality</td>
-                                <td style={{align:'right'}}>{selectedData.rocket.second_stage.payloads[0].nationality}</td>
+                                <td style={{align:'left'}}>{selectedData.rocket.second_stage.payloads[0].nationality}</td>
                             </tr>                   
                             <tr>
                                 <td>Launch Date</td>
-                                <td style={{align:'right'}}>{selectedData.launch_date_utc}</td>
+                                <td style={{align:'left'}}>{selectedData.launch_date_utc}</td>
                             </tr>                   
                             <tr>
                                 <td>Payload Type</td>
-                                <td style={{align:'right'}}>{selectedData.rocket.rocket_type}</td>
+                                <td style={{align:'left'}}>{selectedData.rocket.rocket_type}</td>
                             </tr>                   
                             <tr>
                                 <td>Orbit</td>
-                                <td style={{align:'right'}}>{selectedData.rocket.second_stage.payloads[0].orbit}</td>
+                                <td style={{align:'left'}}>{selectedData.rocket.second_stage.payloads[0].orbit}</td>
                             </tr>                   
                             <tr>
                                 <td>Launch Site</td>
-                                <td style={{align:'right'}}>{selectedData.launch_site.site_name}</td>
+                                <td style={{align:'left'}}>{selectedData.launch_site.site_name}</td>
                             </tr>                   
                         </tbody>
                     </Table>

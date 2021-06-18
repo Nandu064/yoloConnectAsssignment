@@ -1,0 +1,16 @@
+.container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70%;
+}
+.status{
+    position: relative;
+}
+.details{
+    font-size: 15px;
+}
+.linkDetails{
+    display: flex;
+    width: 10%;
+}
