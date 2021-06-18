@@ -9,6 +9,7 @@ export default function Dashboard() {
    const [show, setShow] = useState(false);
    const [selectedData, setSelectedData] = useState();
    const launchData = launches ? launches.map(launch=>{
+       
        if(launch.launch_success === true){
             return launch.launch_success = "Success"
             
@@ -17,7 +18,10 @@ export default function Dashboard() {
        }
        else if(launch.launch_success === null){
             return launch.launch_success = "Upcoming"
-       }return null;
+       }
+       const x = new Date(launch.launch_date_utc)
+       launch.launch_date_utc = x.toUTCString()
+       
    }): null;
    
    const paginateData = launches
