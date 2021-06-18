@@ -11,6 +11,7 @@ export default function Dashboard() {
    const launchData = launches ? launches.map(launch=>{
        if(launch.launch_success === true){
             return launch.launch_success = "Success"
+            
        }else if(launch.launch_success === false){
             return launch.launch_success = "Failed"
        }
@@ -18,7 +19,9 @@ export default function Dashboard() {
             return launch.launch_success = "Upcoming"
        }return null;
    }): null;
+   
    const paginateData = launches
+   
    const paginateColumns = [
     { dataField: 'flight_number', text: 'No',headerStyle: { backgroundColor: '#215E95', color: 'white'} },
     { dataField: 'launch_date_utc', text: 'Launched (UTC)',headerStyle: { backgroundColor: '#215E95', color: 'white'} },
@@ -69,7 +72,6 @@ export default function Dashboard() {
         axios.get('https://api.spacexdata.com/v3/launches')
         .then((res)=>{
             setLaunches(res.data);
-            console.log(res.data);
         })
     },[])
     
@@ -118,26 +120,35 @@ export default function Dashboard() {
     }
     return (
         <div>
-            <div>
+            <div style={{
+                display:'flex',
+                justifyContent:'space-between',
+                height:'45px',
+                marginBottom:'30px',
+            }}>
                 <h1 style={{
-                    backgroundColor:'lightgray',
-                    color:'black',
+                    backgroundColor:'#215E95',
+                    color:'white',
                     fontSize:'24px',
                     fontWeight:'bold',
-                    height:'40px'
+                    height:'100%',
+                    width:'70%'
                     }}>Space X</h1>
                 <div 
                     style={{
                         display:'flex',
                         justifyContent:'flex-end',
+                        height:'100%',
                         paddingTop:'10px',
                         marginBottom:'10px',
+                        width:'30%'
                     }}
                 >
                     <i className="fas fa-filter"
                         style={{
-                            height:'20px',
-                            width:'20px'
+                            color:'#215E95',
+                            height:'25px',
+                            width:'25px'
                         }}
                     ></i>
                     <select id="select" style={{width:'150px'}} onChange={handleChange}>
