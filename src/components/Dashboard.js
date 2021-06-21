@@ -77,7 +77,6 @@ export default function Dashboard() {
         axios.get('https://api.spacexdata.com/v3/launches')
         .then((res)=>{
             setLaunches(res.data);
-            console.log(res.data[0])
         })
     },[])
     
